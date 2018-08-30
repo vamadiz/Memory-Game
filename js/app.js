@@ -1,7 +1,7 @@
 /*
  * Create a list that holds all of your cards
  */
- let cardsList = [
+ let cardsArray = [
              'fa-diamond', 'fa-paper-plane-o', 'fa-anchor', 'fa-bolt',
              'fa-cube', 'fa-anchor', 'fa-leaf', 'fa-bicycle',
              'fa-diamond', 'fa-bomb', 'fa-leaf', 'fa-bomb',
@@ -40,11 +40,21 @@ function shuffle(array) {
     return array;
 }
 
+function setTime() {
+   ++totalSeconds;
+   secondsLabel.innerHTML = pad(totalSeconds % 60);
+   minutesLabel.innerHTML = pad(parseInt(totalSeconds / 60));
+ }
+
+
+
 
 /*
  * set up the event listener for a card. If a card is clicked:
  *  - display the card's symbol (put this functionality in another function that you call from this one)
  *  - add the card to a *list* of "open" cards (put this functionality in another function that you call from this one)
+
+ 
 
  *  - if the list already has another card, check to see if the two cards match
 

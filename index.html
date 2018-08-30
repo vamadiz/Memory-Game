@@ -22,7 +22,7 @@
         		<li><i class="fa fa-star"></i></li>
         	</ul>
 
-        	<span class="moves">3</span> Moves
+        	<span id = "move" class="moves">3</span> Moves
 
             <div class="restart">
         		<i class="fa fa-repeat"></i>
@@ -80,6 +80,26 @@
             </li>
         </ul>
     </div>
+
+    <section id="modal">
+              <div id="myModal" role="dialog">
+                  <div class="modal-dialog">
+                      <div class="modal-content">
+                          <div class="modal-header">
+                              <button type="button" class="close" data-dismiss="modal" id="closeBut">&times;</button>
+                              <h4 class="modal-title">Congratulations! You won!</h4>
+                          </div>
+                          <div class="modal-body">
+                              <p id="statistics"></p>
+                              <p id="motivation-message"><p>
+                          </div>
+                          <div class="modal-footer">
+                              <button type="button" class="btn btn-default" data-dismiss="modal" id="playAgain">Play Again</button>
+                          </div>
+                        </div>
+                    </div>
+                </div>
+        </section>
 
     <script src="js/app.js"></script>
 </body>
