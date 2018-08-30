@@ -14,7 +14,16 @@
  *   - loop through each card and create its HTML
  *   - add each card's HTML to the page
  */
+ let cardsElements = document.getElementsByClassName('card');
 
+  let openedCards = [];
+  let counter = 0;
+  let successfulMoves = 0;
+  let unsuccessfulMoves = 0;
+  let numbOfStars = 3;
+  let minutesLabel = document.getElementById('minutes');
+  let secondsLabel = document.getElementById('seconds');
+  let totalSeconds = 0;
 
 // Shuffle function from http://stackoverflow.com/a/2450976
 function shuffle(array) {
