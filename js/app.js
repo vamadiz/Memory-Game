@@ -34,16 +34,16 @@ function shuffle(array) {
         temporaryValue = array[currentIndex];
         array[currentIndex] = array[randomIndex];
         array[randomIndex] = temporaryValue;
-    }
+    };
 
     return array;
-}
+};
 
 function setTime() {
    ++totalSeconds;
    secondsLabel.innerHTML = pad(totalSeconds % 60);
    minutesLabel.innerHTML = pad(parseInt(totalSeconds / 60));
- }
+ };
 
 function buildCards() {
   for (let i = 0; i < cardsElements.length; i++) {
@@ -53,10 +53,76 @@ function buildCards() {
       faTag.classList.add(faIconName);
       cardsElements[i].appendChild(faTag);
       cardsElements[i].tabIndex = 0;
-  }
+  };
+};
+
+function flipCard (evt) {
+  evt.target.classList.add('open');
+  evt.target.classList.add('show');
+};
+
+function matchedCards (arr) {
+  successfulMoves = successfulMoves + 1;
+
+  arr[0].classList.add('match');
+  arr[0].classList.add('animated');
+  arr[0].classList.add('swing');
+
+  arr[1].classList.add('match');
+  arr[1].classList.add('animated');
+  arr[1].classList.add('swing');
+
+  arr.pop();
+  arr.pop();
+  return successfulMoves;
+};
+
+function unmatchedCards (arr) {
+  unsuccessfulMoves = unsuccessfulMoves + 1;
+
+  arr[0].classList.add('animated');
+  arr[0].classList.add('shake');
+
+  arr[1].classList.add('animated');
+  arr[1].classList.add('shake');
+
+  setTimeout(funtion() {
+    arr[0].classList.remove('open');
+    arr[0].classList.remove('show');
+    arr[0].classList.remove('animated');
+    arr[0].classList.remove('shake');
+
+    arr[1].classList.remove('open');
+    arr[1].classList.remove('show');
+    arr[1].classList.remove('animated');
+    arr[1].classList.remove('shake');
+
+    arr.pop();
+    arr.pop();
+  }, 1000);
+
+  return unsuccessfulMoves;
+};
+
+funtion movesCounter(num) {
+  num = num + 1;
+  document.getElementById('move').textContent = num;
+  return num;
 }
 
+funtion gameOver() {
+  let scorePanel - document.getElementById('score');
+  scorePanel.style.visibilty = 'hidden';
+  document.getElementById('secondStar').style.visibilty = 'hidden';
+  document.getElementById('thirdStar').style.visibilty = 'hidden';
 
+  let deck = document.getElementById('cardsDeck');
+  deck.style.visibilty = 'hidden';
+
+  document.getElementById('statistics').textContent = 'Your Time (mm:ss) is: ' + minutesLabel.textContent + ':' + secondsLabel.textContent + ' With ' + counter + ' moves and ' + numbOfStars + ' star(s)!';
+
+  
+}
 
 /*
  * set up the event listener for a card. If a card is clicked:
