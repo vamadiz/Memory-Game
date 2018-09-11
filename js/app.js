@@ -8,6 +8,7 @@
              'fa-bolt', 'fa-bicycle', 'fa-paper-plane-o', 'fa-cube'
  ];
 
+cardsArray = [...cardsArray, ...cardsArray];
 /*
  * Display the cards on the page
  *   - shuffle the list of cards using the provided "shuffle" method below
@@ -44,6 +45,15 @@ function setTime() {
    secondsLabel.innerHTML = pad(totalSeconds % 60);
    minutesLabel.innerHTML = pad(parseInt(totalSeconds / 60));
  };
+
+ function pad(val) {
+    let valString = val + '';
+    if (valString.length < 2) {
+        return '0' + valString;
+    } else {
+        return valString;
+    }
+};
 
 function buildCards() {
   for (let i = 0; i < cardsElements.length; i++) {
@@ -108,7 +118,7 @@ funtion movesCounter(num) {
   num = num + 1;
   document.getElementById('move').textContent = num;
   return num;
-}
+};
 
 funtion gameOver() {
   let scorePanel - document.getElementById('score');
@@ -121,8 +131,165 @@ funtion gameOver() {
 
   document.getElementById('statistics').textContent = 'Your Time (mm:ss) is: ' + minutesLabel.textContent + ':' + secondsLabel.textContent + ' With ' + counter + ' moves and ' + numbOfStars + ' star(s)!';
 
-  
-}
+  let winModal = document.getElementById('modal');
+  winModal.style.display = 'block';
+  document.getElementById('motivation-message').textContent = 'Great Job!';
+  clearInterval(timer);
+};
+
+function closeModal() {
+    let congratModal = document.getElementById('modal');
+    congratModal.style.display = 'none';
+ };
+
+
+ function resetGame() {
+   closeModal();
+
+   clearInterval(timer);
+   secondsLabel.innerHTML = '00';
+   minutesLabel.innerHTML = '00';
+   totalSeconds = 0;
+   timer = setInterval(setTime, 1000);
+   numbOfStars = 3;
+   openedCards = [];
+   unsuccessfulMoves = 0;
+   successfulMoves = 0;
+   counter = 0;
+
+   document.getElementById('secondStar').style.visibilty = 'visible';
+   document.getElementById('thirdStar').style.visibilty = 'visible';
+
+   for (let i = 0; i < cardsElements.length; i++) {
+         cardsElements[i].classList.remove('open', 'show', 'match', 'animated', 'swing');
+         cardsElements[i].removeChild(cardsElements[i].childNodes[0]);
+    };
+
+    Shuffle(cardsArray);
+    buildCards();
+    document.getElementById('move').textContent = '';
+
+    let scorePanel = document.getElementById('score');
+    scorePanel.style.visibilty = 'visible';
+
+};
+
+let timer = setInterval(setTime, 1000);
+
+shuffle(cardsArray);
+
+buildCards();
+
+document.getElementById('cardsDeck').addEventListener('click', function(evt){
+  if (evt.target.nodeName === 'LI') {
+    if (array.prototype.indexOf.call(evt.target.classList, "show")>-1) {
+      return;
+    }
+
+    flipCard(evt);
+    let card = evt.taget;
+
+    document.addEventListener('keydown', function(e) {
+      let keycode = e.keycode;
+      let adjacentCard = '';
+      if (keycode === 39) {
+        if (card.nextElementSibling != null) {
+          adjacentCard = card.nextElementSibling;
+          adjacentCard.focus();
+          card = adjacentCard;
+        };
+      };
+      else if (keycode === 37) {
+        if (card.previousElementSibling != null) {
+          adjacentCard = card.previousElementSibling;
+          adjacentCard.focus();
+          card = adjacentCard;
+        };
+      };
+      else if (keycode === 38) {
+        let previousCard = card;
+        let previousCardsFound = 0;
+        for (i = 0; i < 4; i++) {
+          if (previousCard.previousElementSibling != null) {
+            previousCard = previousCard.previousElementSibling;
+            previousCardsFound = previousCardsFound + 1;
+          };
+        };
+        if (previousCard != null && previousCardsFound === 4) {
+          adjacentCard = previousCard;
+          adjacentCard.focus();
+          card = adjacentCard;
+        };
+      };
+      else if (keycode === 40) {
+        let nextCard = card;
+        let nextCardsFound = 0;
+        for (i = 0; i < 4; i++) {
+          if (nextCard.nextElementSibling != null) {
+            nextCard = nextCard.nextElementSibling;
+            nextCardsFound = nextCardsFound + 1;
+          };
+        };
+        if (nextCard != null && nextCardsFound === 4) {
+          adjacentCard = nextCard;
+          adjacentCard.focus();
+          card = adjacentCard;
+        };
+      };
+
+    });
+    openedCards.push(card);
+
+    if (openedCards.length === 2){
+      counter = movesCounter(counter);
+      if (openedCards[0].firstChild.className === openedCards[1].firstChild.className) {
+        successfulMoves = matchedCards(openedCards);
+        if (successfulMoves === 8) {
+          setTimeout(gameOver, 500);
+        };
+      };
+      else {
+        unsuccessfulMoves = unmatchedCards(openedCards);
+        openedCards = [];
+        if (unsuccessfulMoves === 9) {
+          numbOfStars = numbOfStars - 1;
+          document.getElementById('thirdStar').style.visibilty = 'hidden';
+        };
+        else if (unsuccessfulMoves === 18) {
+          numbOfStars = numbOfStars - 1;
+          document.getElementById('secondStar').style.visibilty = 'hidden';
+        };
+      };
+    };
+  };
+});
+
+let allCards = document.getElementsByClassName('card');
+
+for (let i = 0; i < allCards.length; i++) {
+  allCards[i],addEventListener('keydown', function(ev) {
+    let card = ev.target;
+    let keycode = ev.keycode;
+    if (keycode === 13) {
+      ev.target.click();
+    };
+  });
+};
+
+document.getElementById('playAgain').addEventListener('click', function() {
+  resetGame();
+});
+
+document.getElementById('closeBut').addEventListener('click', function() {
+  closeModal();
+  document.getElementById('title').style.visibilty = 'hidden';
+});
+
+document.getElementById('refresh').addEventListener('click', function() {
+    resetGame();
+});
+
+
 
 /*
  * set up the event listener for a card. If a card is clicked:
