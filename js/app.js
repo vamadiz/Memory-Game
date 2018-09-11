@@ -14,8 +14,7 @@
  *   - loop through each card and create its HTML
  *   - add each card's HTML to the page
  */
- let cardsElements = document.getElementsByClassName('card');
-
+  let cardsElements = document.getElementsByClassName('card');
   let openedCards = [];
   let counter = 0;
   let successfulMoves = 0;
@@ -46,6 +45,16 @@ function setTime() {
    minutesLabel.innerHTML = pad(parseInt(totalSeconds / 60));
  }
 
+function buildCards() {
+  for (let i = 0; i < cardsElements.length; i++) {
+      let faTag = document.createElement('i');
+      let faIconName = cardsArray[i];
+      faTag.classList.add('fa');
+      faTag.classList.add(faIconName);
+      cardsElements[i].appendChild(faTag);
+      cardsElements[i].tabIndex = 0;
+  }
+}
 
 
 
