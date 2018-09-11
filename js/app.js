@@ -285,7 +285,7 @@ document.getElementById('closeBut').addEventListener('click', function() {
   document.getElementById('title').style.visibilty = 'hidden';
 });
 
-document.getElementById('refresh').addEventListener('click', function() {
+document.getElementById('repeat').addEventListener('click', function() {
     resetGame();
 });
 
