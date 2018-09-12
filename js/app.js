@@ -3,9 +3,7 @@
  */
  let cardsArray = [
              'fa-diamond', 'fa-paper-plane-o', 'fa-anchor', 'fa-bolt',
-             'fa-cube', 'fa-anchor', 'fa-leaf', 'fa-bicycle',
-             'fa-diamond', 'fa-bomb', 'fa-leaf', 'fa-bomb',
-             'fa-bolt', 'fa-bicycle', 'fa-paper-plane-o', 'fa-cube'
+             'fa-cube', 'fa-leaf', 'fa-bicycle', 'fa-bomb'
  ];
 
 cardsArray = [...cardsArray, ...cardsArray];
@@ -71,7 +69,7 @@ function flipCard (evt) {
   evt.target.classList.add('show');
 };
 
-function matchedCards (arr) {
+function matchedCards(arr) {
   successfulMoves = successfulMoves + 1;
 
   arr[0].classList.add('match');
@@ -87,7 +85,7 @@ function matchedCards (arr) {
   return successfulMoves;
 };
 
-function unmatchedCards (arr) {
+function unmatchedCards(arr) {
   unsuccessfulMoves = unsuccessfulMoves + 1;
 
   arr[0].classList.add('animated');
@@ -121,7 +119,7 @@ funtion movesCounter(num) {
 };
 
 funtion gameOver() {
-  let scorePanel - document.getElementById('score');
+  let scorePanel = document.getElementById('score');
   scorePanel.style.visibilty = 'hidden';
   document.getElementById('secondStar').style.visibilty = 'hidden';
   document.getElementById('thirdStar').style.visibilty = 'hidden';

@@ -1,0 +1,54 @@
+@media (max-width: 600px) {
+    #cardsDeck {
+        width: 500px;
+        min-height: 500px;
+    }
+
+    .card {
+        height: 100px;
+        width: 100px;
+    }
+}
+
+@media (max-width: 425px) {
+    #cardsDeck {
+        width: 400px;
+    }
+
+    .card {
+        height: 75px;
+        width: 75px;
+    }
+
+    #playerName {
+        width: 70%;
+        margin-bottom: 5px;
+    }
+}
+
+@media (max-width: 375px) {
+    #cardsDeck {
+        width: 340px;
+    }
+
+    .card {
+        height: 62px;
+        width: 62px;
+    }
+}
+
+@media (max-width: 320px) {
+    #cardsDeck {
+        width: 320px;
+        min-height: 450px;
+    }
+
+    .card {
+        height: 55px;
+        width: 55px;
+    }
+
+    .score-panel {
+        width: 300px;
+    }
+}
