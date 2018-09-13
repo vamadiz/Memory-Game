@@ -17,7 +17,7 @@ let minutesLabel = document.getElementById('minutes');
 let secondsLabel = document.getElementById('seconds');
 let totalSeconds = 0;
 
-// Shuffle function from http://stackoverflow.com/a/2450976
+
 function shuffle(array) {
     let currentIndex = array.length, temporaryValue, randomIndex;
 
@@ -108,7 +108,7 @@ function unmatchingCards (arr) {
     return unsuccessfulMoves;
 }
 
-function movesCounter (num) {
+function movesCounter(num) {
     num = num + 1;
     document.getElementById('move').textContent = num;
     return num;
