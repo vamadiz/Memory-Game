@@ -17,7 +17,7 @@ let minutesLabel = document.getElementById('minutes');
 let secondsLabel = document.getElementById('seconds');
 let totalSeconds = 0;
 
-
+//Provided shuffle function
 function shuffle(array) {
     let currentIndex = array.length, temporaryValue, randomIndex;
 
@@ -49,7 +49,6 @@ function pad(val) {
 
 function buildCards () {
     for (let i = 0; i < cardsElements.length; i++) {
-        // TODO: add a new <i> inside every <li> element in the HTML collection 'cardsElements'.
         let faTag = document.createElement('i');
         let faIconName = cardsArray[i];
         faTag.classList.add('fa');
@@ -64,10 +63,10 @@ function flipCard (evt) {
     evt.target.classList.add('show');
 }
 
+//Function for detailing matched cards
 function matchingCards (arr) {
     successfulMoves = successfulMoves + 1;
 
-    // TODO: add match, animated and swing animation classes when both cards match.
     arr[0].classList.add('match');
     arr[0].classList.add('animated');
     arr[0].classList.add('swing');
@@ -81,6 +80,7 @@ function matchingCards (arr) {
     return successfulMoves;
 }
 
+//Function for detailing unmatched cards
 function unmatchingCards (arr) {
     unsuccessfulMoves = unsuccessfulMoves + 1;
 
@@ -91,7 +91,7 @@ function unmatchingCards (arr) {
     arr[1].classList.add('animated');
     arr[1].classList.add('shake');
 
-    // remove all classes after 1 second. i.e: CSS animation ends
+    // remove animations
     setTimeout(function() {
         arr[0].classList.remove('open');
         arr[0].classList.remove('show');
@@ -127,45 +127,44 @@ function gameOver () {
         ':' + secondsLabel.textContent + ' With ' + counter + ' moves and ' + numbOfStars + ' star(s)!';
     let winModal = document.getElementById('modal');
     winModal.style.display='block';
-    document.getElementById('motivation-message').textContent ='woohooo!';
+    document.getElementById('motivation-message').textContent ='Excellent Work!';
     clearInterval(timer);
 }
 
 function resetGame() {
     closeModal();
 
-    // reset the count up timer
+    // reset timer
     clearInterval(timer);
     secondsLabel.innerHTML = '00';
     minutesLabel.innerHTML = '00';
     totalSeconds = 0;
     timer = setInterval(setTime, 1000);
 
-    // show the hidden stars if any
+    // show stars
     document.getElementById('secondStar').style.visibility = 'visible';
     document.getElementById('thirdStar').style.visibility = 'visible';
 
 
-    // Reset the successful moves counter.
+
     counter = 0;
 
-    // reset the game board. Remove the classes including animation classes for matching cards.
+    // resets game board
     for (let i = 0; i < cardsElements.length; i++) {
         cardsElements[i].classList.remove('open', 'show', 'match', 'animated', 'swing');
-        //remove all <i> tags inside the <li> tags
         cardsElements[i].removeChild(cardsElements[i].childNodes[0]);
     }
 
-    // shuffle the array to change the order of strings randomly inside the cardsArray.
+
     shuffle(cardsArray);
 
-    // add the <i> tags after we have shuffled the cardsArray.
+
     buildCards();
 
-    // reset the number of successful moves
+
     successfulMoves = 0;
 
-    // reset the number of moves.
+
     document.getElementById('move').textContent = '';
 
     let scorePanel = document.getElementById('score');
@@ -182,7 +181,7 @@ function closeModal() {
  }
 
 
-// start the count up timer
+// start timer
 let timer = setInterval(setTime, 1000);
 
 shuffle(cardsArray);
@@ -194,13 +193,10 @@ buildCards ();
 document.getElementById('cardsDeck').addEventListener('click', function (evt) {
     if (evt.target.nodeName === 'LI') {
 
-////////////////////////////////////////////////////////////////////////////////////////////
-//I added this code to prevent the function form running when the same element is clicked //
-////////////////////////////////////////////////////////////////////////////////////////////
-/**/  	if(Array.prototype.indexOf.call(evt.target.classList,"show")>-1) {                //
-/**/	  return;                                                                         //
-/**/    }                                                                                 //
-////////////////////////////////////////////////////////////////////////////////////////////
+    if(Array.prototype.indexOf.call(evt.target.classList,"show")>-1) {
+	  return;
+    }
+
 
         flipCard(evt);
         let card = evt.target;
@@ -209,16 +205,15 @@ document.getElementById('cardsDeck').addEventListener('click', function (evt) {
         document.addEventListener('keydown', function(e) {
             let keycode = e.keyCode;
             let adjacentCard = '';
-            if (keycode === 39) { // right arrow shortcut
+            if (keycode === 39) { //right arrow
                 if (card.nextElementSibling != null) {
                     adjacentCard = card.nextElementSibling;
                     adjacentCard.focus();
-                    // set the card now to be equal to the card with focus on it.
                     card = adjacentCard;
                 }
             }
 
-            else if (keycode === 37) { // left arrow shortcut
+            else if (keycode === 37) { //left arrow
                 if (card.previousElementSibling != null) {
                     adjacentCard = card.previousElementSibling;
                     adjacentCard.focus();
@@ -226,10 +221,9 @@ document.getElementById('cardsDeck').addEventListener('click', function (evt) {
                 }
             }
 
-            else if (keycode === 38) { //up arrow shortcut
+            else if (keycode === 38) { //up arrow
                 let previousCard = card;
                 let previousCardsFound = 0;
-                // use the for loop to reach to the 4th previous sibling of the current card.
                 for (i = 0; i < 4; i++) {
                     if (previousCard.previousElementSibling != null) {
                         previousCard = previousCard.previousElementSibling;
@@ -237,7 +231,6 @@ document.getElementById('cardsDeck').addEventListener('click', function (evt) {
                     }
                 }
 
-                // check if the 4th previous sibling exists. And make sure to set focus on the 4th previous element. Not the ones before it.
                 if (previousCard != null && previousCardsFound === 4) {
                     adjacentCard = previousCard;
                     adjacentCard.focus();
@@ -273,7 +266,7 @@ document.getElementById('cardsDeck').addEventListener('click', function (evt) {
             counter = movesCounter(counter);
             if (openedCards[0].firstChild.className === openedCards[1].firstChild.className) {
                 successfulMoves = matchingCards(openedCards);
-                // if successfulMoves is equal to 8, the player wins the game.
+                //Player wins with 8 successful moves
                 if (successfulMoves === 8) {
                     setTimeout(gameOver, 500);
                 }
@@ -301,7 +294,7 @@ for(let i = 0; i < allCards.length; i++) {
     allCards[i].addEventListener('keydown', function(ev) {
         let card = ev.target;
         let keycode = ev.keyCode;
-        if (keycode === 13) { // enter key
+        if (keycode === 13) {
             card.click();
         }
     });
@@ -312,7 +305,6 @@ document.getElementById('playAgain').addEventListener('click', function() {
 })
 
 document.getElementById('closeBut').addEventListener('click', function() {
-    // close the congratulations modal, hide the game's title and change its background image.
     closeModal();
     document.getElementById('title').style.visibility = 'hidden';
     document.getElementById('body').style.backgroundImage = "url('img/gameOverBackground.png')";
