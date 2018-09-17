@@ -5,8 +5,6 @@ let cardsArray = [
             'fa-bolt', 'fa-bicycle', 'fa-paper-plane-o', 'fa-cube'
 ];
 
-
-//define an HTML collection that contains all elements with class name: card.
 let cardsElements = document.getElementsByClassName('card');
 let openedCards = [];
 let counter = 0;
@@ -84,14 +82,13 @@ function matchingCards (arr) {
 function unmatchingCards (arr) {
     unsuccessfulMoves = unsuccessfulMoves + 1;
 
-    // add classes animated and shake on both cards.
     arr[0].classList.add('animated');
     arr[0].classList.add('shake');
 
     arr[1].classList.add('animated');
     arr[1].classList.add('shake');
 
-    // remove animations
+    //Remove animations
     setTimeout(function() {
         arr[0].classList.remove('open');
         arr[0].classList.remove('show');
@@ -186,8 +183,6 @@ let timer = setInterval(setTime, 1000);
 
 shuffle(cardsArray);
 
-
-//Loop through the HTML collection to add a font awesome tag to each card element.
 buildCards ();
 
 document.getElementById('cardsDeck').addEventListener('click', function (evt) {
@@ -201,7 +196,7 @@ document.getElementById('cardsDeck').addEventListener('click', function (evt) {
         flipCard(evt);
         let card = evt.target;
 
-        // listen to specific keydown on the keyboard such as left, right, up and down keys.
+        // Function for using keyboard navigation
         document.addEventListener('keydown', function(e) {
             let keycode = e.keyCode;
             let adjacentCard = '';
@@ -238,11 +233,10 @@ document.getElementById('cardsDeck').addEventListener('click', function (evt) {
                 }
             }
 
-            else if (keycode === 40) { //down arrow shortcut
+            else if (keycode === 40) { //down arrow
                 let nextCard = card;
-
                 let nextCardsFound = 0;
-                // use the for loop to reach to the 4th next sibling of the current card.
+
                 for (i = 0; i < 4; i++) {
                     if (nextCard.nextElementSibling != null) {
                         nextCard = nextCard.nextElementSibling;
@@ -250,7 +244,6 @@ document.getElementById('cardsDeck').addEventListener('click', function (evt) {
                     }
                 }
 
-                // check if the 4th next sibling exists. And make sure to set focus on the 4th next element. Not the ones before it.
                 if (nextCard != null && nextCardsFound === 4) {
                     adjacentCard = nextCard;
                     adjacentCard.focus();
