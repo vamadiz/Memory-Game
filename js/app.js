@@ -293,9 +293,16 @@ for(let i = 0; i < allCards.length; i++) {
     });
 }
 
+//restart game
+document.getElementById('restart').addEventListener('click', function() {
+    resetGame();
+})
+
+//run reset game function when play again button is clicked
 document.getElementById('playAgain').addEventListener('click', function() {
     resetGame();
 })
+
 
 document.getElementById('closeBut').addEventListener('click', function() {
     closeModal();
@@ -304,9 +311,7 @@ document.getElementById('closeBut').addEventListener('click', function() {
 
 })
 
-document.getElementById('refresh').addEventListener('click', function() {
-    resetGame();
-})
+
 
 
 
