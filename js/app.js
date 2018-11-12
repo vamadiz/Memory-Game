@@ -195,66 +195,9 @@ document.getElementById('cardsDeck').addEventListener('click', function (evt) {
 
         flipCard(evt);
         let card = evt.target;
-
-        // Function for using keyboard navigation
-        document.addEventListener('keydown', function(e) {
-            let keycode = e.keyCode;
-            let adjacentCard = '';
-            if (keycode === 39) { //right arrow
-                if (card.nextElementSibling != null) {
-                    adjacentCard = card.nextElementSibling;
-                    adjacentCard.focus();
-                    card = adjacentCard;
-                }
-            }
-
-            else if (keycode === 37) { //left arrow
-                if (card.previousElementSibling != null) {
-                    adjacentCard = card.previousElementSibling;
-                    adjacentCard.focus();
-                    card = adjacentCard;
-                }
-            }
-
-            else if (keycode === 38) { //up arrow
-                let previousCard = card;
-                let previousCardsFound = 0;
-                for (i = 0; i < 4; i++) {
-                    if (previousCard.previousElementSibling != null) {
-                        previousCard = previousCard.previousElementSibling;
-                        previousCardsFound = previousCardsFound + 1;
-                    }
-                }
-
-                if (previousCard != null && previousCardsFound === 4) {
-                    adjacentCard = previousCard;
-                    adjacentCard.focus();
-                    card = adjacentCard;
-                }
-            }
-
-            else if (keycode === 40) { //down arrow
-                let nextCard = card;
-                let nextCardsFound = 0;
-
-                for (i = 0; i < 4; i++) {
-                    if (nextCard.nextElementSibling != null) {
-                        nextCard = nextCard.nextElementSibling;
-                        nextCardsFound = nextCardsFound + 1;
-                    }
-                }
-
-                if (nextCard != null && nextCardsFound === 4) {
-                    adjacentCard = nextCard;
-                    adjacentCard.focus();
-                    card = adjacentCard;
-                }
-            }
-
-        });
-
         openedCards.push(card);
 
+        //if the list already has another card, check to see if the two cards match
         if (openedCards.length === 2) {
             counter = movesCounter(counter);
             if (openedCards[0].firstChild.className === openedCards[1].firstChild.className) {
@@ -264,15 +207,17 @@ document.getElementById('cardsDeck').addEventListener('click', function (evt) {
                     setTimeout(gameOver, 500);
                 }
             }
+            //if cards do not match, close each
             else {
                 unsuccessfulMoves = unmatchingCards(openedCards);
                 openedCards=[];
 
-                if (unsuccessfulMoves === 9) {
+                //Remove stars as players make more unsuccessful moves
+                if (unsuccessfulMoves === 10) {
                     numbOfStars = numbOfStars - 1;
                     document.getElementById('thirdStar').style.visibility = 'hidden';
                 }
-                else if (unsuccessfulMoves === 18) {
+                else if (unsuccessfulMoves === 20) {
                     numbOfStars = numbOfStars -1;
                     document.getElementById('secondStar').style.visibility = 'hidden';
                 }
@@ -283,15 +228,6 @@ document.getElementById('cardsDeck').addEventListener('click', function (evt) {
 
 let allCards = document.getElementsByClassName('card');
 
-for(let i = 0; i < allCards.length; i++) {
-    allCards[i].addEventListener('keydown', function(ev) {
-        let card = ev.target;
-        let keycode = ev.keyCode;
-        if (keycode === 13) {
-            card.click();
-        }
-    });
-}
 
 //restart game
 document.getElementById('restart').addEventListener('click', function() {
@@ -321,7 +257,7 @@ document.getElementById('closeBut').addEventListener('click', function() {
  *  - add the card to a *list* of "open" cards (put this functionality in another function that you call from this one)
 
 
- *  - if the list already has another card, check to see if the two cards match
+ *  -
 
  *    + if the cards do match, lock the cards in the open position (put this functionality in another function that you call from this one)
 
